@@ -1,26 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{asset('asset/css/style.css')}}">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Image's revolution</title>
-</head>
-
-<body>
-    <div class="header">
-        <div class="header-logo-contain">
-            <div class="header-logo"></div>
-            <span class="header-brand">Kwarovski</span>
-        </div>
-        <div class="header-signIn">
-            <button class="d-btn" id="signIn">Sign in</button>
-        </div>
-    </div>
+@section('content')
     <div class="content-contain">
         <div class="content-left intro">
             <div class="function">
@@ -102,35 +82,6 @@
             <button id="imgDownload" class="d-btn">Download</button>
         </div>
     </div>
-    <div class="footer">
-        <div class="footer-up">
-            <div class="footer-about">
-                <p><b style="color: #fff;">About</b>
-                    <br> We store the uploaded images securely to allow you to view your history and re-download the enlarged photos without using costly GPU power (and not charge you again). We don't use your pictures for machine learning or anything
-                    like that, and we don't share or showcase them either.
-                </p>
-            </div>
-            <div class="footer-contact">
-                <p> <b style="color: #fff;">Get in touch</b> <br> Contact us <br> Become an Affiliate <br> Careers
-                </p>
-            </div>
-            <div class="footer-tech">
-                <p>
-                    <b style="color: #fff;">Technology</b> <br> Wordpress <br> Jetpack <br> Local <br>
-                </p>
-            </div>
-        </div>
-        <div class="footer-down">
-            <div class="copyright">Copy &#174; All Rights Reserved by Kwarovski</div>
-            <div class="footer-icon-contain">
-                <div class="footer-icon icon-1"></div>
-                <div class="footer-icon icon-2"></div>
-                <div class="footer-icon icon-3"></div>
-                <div class="footer-icon icon-4"></div>
-                <div class="footer-icon icon-5"></div>
-            </div>
-        </div>
-    </div>
 
     <div id="deletePopup" class="d-popup-contain">
         <div class="d-popup">
@@ -147,13 +98,4 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <script src="{{asset('asset/js/upscale.js')}}"></script>
-</body>
-
-
-</html>
+@endsection
