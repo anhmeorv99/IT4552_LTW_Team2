@@ -1,5 +1,5 @@
 .header {
-    height: 40px;
+    height: 80px;
     /* width: 100%; */
     background-color: #282726;
     display: flex;
@@ -9,6 +9,15 @@
 }
 
 .header-logo-contain {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-logo-contain .logo-area {
+    width: 200px;
+    height: 100%;
     display: flex;
     align-items: center;
 }
@@ -18,8 +27,8 @@
     width: 24px;
     height: 24px;
     background-color: #b4a6a6fa;
-    -webkit-mask-image: url('../../../public/asset/logo-big.svg');
-    mask-image: url('../../../public/asset/logo-big.svg');
+    -webkit-mask-image: url('../../logo-big.svg');
+    mask-image: url('../../logo-big.svg');
 }
 
 .header-brand {
@@ -38,6 +47,22 @@
     font-weight: normal;
     outline: unset;
     border: none;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    padding: 6px 16px;
+    color: #fff;
+    text-align: center;
+    background-color: #563838;
+    line-height: 34px;
+}
+
+a:hover, a:active {
+    background-color: #794f4f;
+    color: #fff;
 }
 
 .d-btn:hover {
@@ -61,3 +86,29 @@
     color: rgba(0, 0, 0, .4);
     ;
 }
+
+.header-signIn
+ {
+     display: flex;
+     align-items: center;
+ }
+ .nav-item {
+    color: #ffffff;
+ }
+
+ .nav-item:not(:last-child) {
+    margin-right: 10px;
+ }
+
+ li {
+    list-style-type: none;
+ }
+
+ .header-signIn ul {
+     display: flex;
+     margin-bottom: 0px;
+ }
+
+ #registerUser {
+     margin-right: 10px;
+ }
