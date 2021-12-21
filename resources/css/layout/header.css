@@ -1,0 +1,63 @@
+.header {
+    height: 40px;
+    /* width: 100%; */
+    background-color: #282726;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 24px;
+}
+
+.header-logo-contain {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    background-color: #b4a6a6fa;
+    -webkit-mask-image: url('../../../public/asset/logo-big.svg');
+    mask-image: url('../../../public/asset/logo-big.svg');
+}
+
+.header-brand {
+    color: #A37C27;
+    font-size: 25px;
+    font-family: Imperial-Script;
+}
+
+.d-btn {
+    background-color: #282726cb;
+    border-radius: 4px;
+    height: 34px;
+    padding: 6px 16px;
+    text-align: center;
+    color: #ffffff;
+    font-weight: normal;
+    outline: unset;
+    border: none;
+}
+
+.d-btn:hover {
+    background-color: #413e3ccb;
+}
+
+.ratio-btn {
+    background-color: #563838;
+    margin-top: 20px;
+}
+
+.ratio-btn:hover {
+    background-color: #794f4f;
+}
+
+#ratio-x2 {
+    margin-right: 10px;
+}
+
+.result-time {
+    color: rgba(0, 0, 0, .4);
+    ;
+}

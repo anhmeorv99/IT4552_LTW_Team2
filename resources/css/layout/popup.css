@@ -1,0 +1,78 @@
+.d-popup-contain {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(29, 29, 29, .3);
+    z-index: 600;
+    opacity: 1;
+    /* display: flex;
+    justify-content: center; */
+    display: none;
+}
+
+.d-popup {
+    width: 560px;
+    height: 180px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.popup-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    /* background-color: #fff; */
+    border-radius: 0 4px 0 0;
+    z-index: 3;
+    background-image: url('../../../public/asset/icon/x.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+
+.popup-close:hover {
+    background-color: rgba(112, 111, 111, 0.199);
+}
+
+.popup-content {
+    margin-top: 10px;
+    padding: 32px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 560px;
+    border-radius: 7px;
+}
+
+.popup-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.delete-cancel {
+    background-color: #6A8A82;
+    margin-right: 16px;
+}
+
+.delete-continue {
+    background-color: #A7414A;
+}
+
+.delete-cancel:hover {
+    background-color: #82a59c;
+}
+
+.delete-continue:hover {
+    background-color: #c74f59;
+}
