@@ -46,12 +46,15 @@
 
 .ratio-btn {
     background-color: #563838;
-    margin-right: 10px;
     margin-top: 20px;
 }
 
 .ratio-btn:hover {
     background-color: #794f4f;
+}
+
+#ratio-x2 {
+    margin-right: 10px;
 }
 
 .result-time {

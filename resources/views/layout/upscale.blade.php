@@ -73,7 +73,10 @@
                 <div class="instruction intro intro-next">JPG, PNG, Max size ...</div>
                 <!-- <input id="loadImage" class="upload-image" type='file' /> -->
 
-                <input class="intro intro-next" type="file" multiple id="gallery-photo-add">
+                <label class="d-btn custom-file-upload intro intro-next">
+                    <input class="" type="file" multiple id="gallery-photo-add">
+                    Custom Upload
+                </label>              
                 <div class="gallery"></div>
                 <div class="ratio-contain">
                     <button id="ratio-x2" class="d-btn ratio-btn">x2</button>

@@ -35,8 +35,8 @@
     width: 50%;
     background-color: rgba(0, 0, 0, .03);
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    /* grid-template-rows: repeat(10, 1fr); */
     grid-gap: 10px;
     justify-content: center;
     padding-top: 5px;
