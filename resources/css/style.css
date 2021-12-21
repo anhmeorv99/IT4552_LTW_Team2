@@ -1,0 +1,44 @@
+@import url('../css/layout/header.css');
+@import url('../css/layout/content.css');
+@import url('../css/layout/footer.css');
+
+/* Components */
+
+@import url('../css/layout/result.css');
+@import url('../css/layout/popup.css');
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-size: 14px;
+    font-family: Roboto-1;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: Roboto-1;
+    src: url('../asset/fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: Roboto-2;
+    src: url('../asset/fonts/Roboto-Bold.ttf');
+}
+
+@font-face {
+    font-family: Roboto-3;
+    src: url('../asset/fonts/Roboto-Italic.ttf');
+}
+
+@font-face {
+    font-family: Imperial-Script;
+    src: url('../asset/fonts/ImperialScript-Regular.ttf');
+}
