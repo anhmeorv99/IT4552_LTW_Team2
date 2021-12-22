@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\MyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,9 @@ use App\Http\Controllers\CustomAuthController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('ajaxRequest', [MyController::class, 'ajaxRequest']);
+Route::post('ajaxRequest', [MyController::class, 'ajaxRequestPost'])->name('ajaxRequest.post');
 
 Route::get('/', [CustomAuthController::class, 'dashboard'])->name('dashboard');
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
