@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Image extends Model
 {
@@ -12,6 +13,6 @@ class Image extends Model
     ];
 
     public function image(){
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -26,7 +26,8 @@ class CustomAuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended()->withSuccess('Signed in');
+            return view('dashboard');
+            // return redirect('dashboard')->withSuccess('Signed in');
         }
 
         return redirect("login")->withSuccess('Login details are not valid');
@@ -50,7 +51,7 @@ class CustomAuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
 
-        return redirect("dashboard")->withSuccess('You have signed-in');
+        return view('auth.reg');
     }
 
 
