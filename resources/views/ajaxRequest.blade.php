@@ -18,12 +18,12 @@
 
             <div class="form-group">
                 <label>Name:</label>
-                <input type="text" name="name" class="form-control" placeholder="Name" required="">
+                <input type="text" name="scale" id="scale" class="form-control" placeholder="Name" required="">
             </div>
 
             <div class="form-group">
                 <label>Password:</label>
-                <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                <input type="file" name="image_file" id="image_file" class="form-control" placeholder="Password" required="">
             </div>
 
             <div class="form-group">
@@ -50,14 +50,12 @@
     });
 
     function getData() {
-        var name = $("input[name=name]").val();
-            var password = $("input[name=password]").val();
-            var email = $("input[name=email]").val();
-
+        var scale = $("#scale").val();
+        var image_file = $("#image_file").val();
             $.ajax({
             type:'POST',
             url:"{{ route('ajaxRequest.post') }}",
-            data:{name:name, password:password, email:email},
+            data:{scale:scale, image:scale, email:email},
             success:function(data){
                 if (data.success){
                     clearInterval(interval);
