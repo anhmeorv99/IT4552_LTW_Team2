@@ -89,7 +89,8 @@ class MyController extends Controller
                 'file_name' => $file_name,
                 'scale' => 2,
             ]);
-            return response()->json(['success'=> $response->body()]);
+            return response()->json(json_decode($response->body()));
+            // return $response->body();
         }
 
         return Response()->json([

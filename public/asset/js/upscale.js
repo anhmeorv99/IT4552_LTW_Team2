@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $(document).ready(function() {
     new Upscale();
 });
@@ -12,7 +18,7 @@ class Upscale {
     initEvents() {
 
         // $('#ratio-x2').click(this.displayResult.bind(this));
-        $('.ratio-btn').click(this.displayResult.bind(this));
+        // $('.ratio-btn').click(this.displayResult.bind(this));
 
         // delete image upscaled
         $('#delImg').click(this.deletePopupShow.bind(this));
@@ -25,13 +31,15 @@ class Upscale {
 
     // show delete image popup
     deletePopupShow() {
-            $('#deletePopup').show();
-        }
-        // Close delete image popup
+        $('#deletePopup').show();
+    }
+
+    // Close delete image popup
     deletePopupHide() {
-            $('#deletePopup').hide();
-        }
-        // delete upscaled image
+        $('#deletePopup').hide();
+    }
+
+    // delete upscaled imageQ
     deleteUpscaledImg() {
         $('.result-img').children().remove();
         $('#deletePopup').hide();
@@ -40,37 +48,91 @@ class Upscale {
 
 
     // load result
-    displayResult() {
-        let images = $(".gallery img[fieldname = 'inputImage']");
-        for (const image of images) {
-            $('.result-img').prepend(image);
+    // displayResult() {
+    //     let images = $(".gallery img[fieldname = 'inputImage']");
+    //     for (const image of images) {
+    //         let src = $(image).attr('src')
+    //         let imageAndLoading = `<div class="image">
+    //             <img src="${src}" fieldname="inputImage">
+    //             <div class="loading lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    //         </div>`
+    //         let imageHtml = `<div class="image">
+    //             <img src="${src}" fieldname="inputImage">
+    //         </div>`
+    //         $('.result-img').prepend(imageHtml);
+    //         // $('.origin-image').prepend(imageHtml);
+    //         // $('#upscaledImg').prepend(imageAndLoading)
+    //     }
+
+    //     $('.intro-next').show();
+    //     $('#upscaleResult').show();
+    // }
+}
+
+let dataFile = new FormData();
+// preview image
+$('#gallery-photo-add').on('change', function(e) {
+    imagesPreview(this, 'div.gallery');
+    $('.ratio-contain').find('button').attr('disabled', false)
+    $('.intro').hide();
+    $('#image-contain').addClass('image-preview');
+    if (e.target.files.length > 0) {
+        for (i = 0; i < e.target.files.length; i++) {
+            // dataFile.append('files[]', e.target.files[i]);
+            dataFile.append('file', e.target.files[i]);
         }
-        $('.intro-next').show();
-        // for (const image of images) {
-        //     $('#upscaledImg').append(image);
-        // }
-        $('#upscaleResult').show();
     }
+    displayResult(e);
+});
+
+const loadingHtml = '<div class="loading lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
+
+function displayResult(e) {
+    let src = URL.createObjectURL(e.target.files[0])
+    let imageHtml = `<div class="image">
+        <img src="${src}" fieldname="inputImage">
+    </div>`
+    $('.result-img').prepend(imageHtml);
+    $('.intro-next').show();
+    $('#upscaleResult').show();
 }
 
 
+let intervalUpload = '';
+$('.btn-upload-image').on('click', function () {
+    let scaleUp = $(this).data('scale')
+    $('.ratio-contain').find('button').attr('disabled', true)
+    dataFile.append('scale', scaleUp);
+    $($('#upscaledImg .image')[0]).append(loadingHtml);
+    intervalUpload = setInterval(function () { handleUpload(); }, 3000);
+})
 
-// preview image
-$('#gallery-photo-add').on('change', function() {
-
-    imagesPreview(this, 'div.gallery');
-    $('.intro').hide();
-    $('#image-contain').addClass('image-preview');
-    $('input').val("");
-    // let startButton = $(` <div class="ratio-contain">
-    //                         <button id="ratio-x2" class="d-btn ratio-btn">x2</button>
-    //                      <button id="ratio-x4" class="d-btn ratio-btn">x4</button>
-    //                     </div>`);
-    // $('.content-inside').append(startButton)
-
-});
-
-
+function handleUpload() {
+    $.ajax({
+        type: 'POST',
+        url: "/store",
+        data: dataFile,
+        contentType: false,
+        processData: false,
+        enctype: 'multipart/form-data',
+        beforeSend: function () {
+            $($('#upscaledImg .image')[0]).append(loadingHtml)
+        },
+        success: (data) => {
+          if (data.status_code == 1) {
+                let html = '';
+                html += `<img src='/results/${data.file_name}' data-id='${data.file_name}'>`
+                $('#upscaledImg .image img[fieldname = "inputImage"]').attr('src', `results/${data.file_name}`);
+                $('#upscaledImg .image img').attr('fieldname', '');
+                $('.loading').remove();
+                clearInterval(intervalUpload)
+          }
+        },
+        error: function(data) {
+          console.log(data);
+        }
+    });
+}
 
 // load image from computer
 var imagesPreview = function(input, placeToInsertImagePreview) {

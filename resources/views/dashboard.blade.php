@@ -55,13 +55,14 @@
                 <!-- <input id="loadImage" class="upload-image" type='file' /> -->
 
                 <label class="d-btn custom-file-upload intro intro-next">
-                    <input class="" type="file" multiple id="gallery-photo-add">
+                    <input type="file" multiple id="gallery-photo-add">
                     Custom Upload
                 </label>
                 <div class="gallery"></div>
+                <input type="hidden" value="{{ route('store-file') }}" id="url-upload">
                 <div class="ratio-contain">
-                    <button id="ratio-x2" class="d-btn ratio-btn">x2</button>
-                    <button id="ratio-x4" class="d-btn ratio-btn">x4</button>
+                    <button id="ratio-x2" class="d-btn ratio-btn btn-upload-image" data-scale="2">x2</button>
+                    <button id="ratio-x4" class="d-btn ratio-btn btn-upload-image" data-scale="4">x4</button>
                 </div>
             </div>
         </div>
