@@ -8,8 +8,8 @@
 
             <ul class="top-details menu-beta l-inline">
                 @guest
-                    <li><a class="nav-item" href="{{route('login')}}">Login</a></li>
-                    <li><a id="registerUser" class="nav-item" href="{{route('register-user')}}">Register</a></li>
+                    <li><a id="loginUser" class="nav-item" href="{{route('login')}}">Login</a></li>
+                    <li><a class="nav-item" href="{{route('register-user')}}">Register</a></li>
                     @endguest
                 @auth
                 <li><a class="nav-item" href="{{route('signout')}}">Logout</a></li>

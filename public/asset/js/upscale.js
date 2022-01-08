@@ -12,7 +12,8 @@ class Upscale {
     initEvents() {
 
         // $('#ratio-x2').click(this.displayResult.bind(this));
-        $('.ratio-btn').click(this.displayResult.bind(this));
+        // $('.ratio-btn').click(this.displayResult.bind(this));
+        $('.ratio-btn').click(this.storageImage); //bind(this)
 
         // delete image upscaled
         $('#delImg').click(this.deletePopupShow.bind(this));
@@ -38,18 +39,33 @@ class Upscale {
         $('#upscaleResult').hide();
     }
 
-
-    // load result
-    displayResult() {
-        let images = $(".gallery img[fieldname = 'inputImage']");
-        for (const image of images) {
-            $('.result-img').prepend(image);
-        }
-        $('.intro-next').show();
-        // for (const image of images) {
-        //     $('#upscaledImg').append(image);
-        // }
-        $('#upscaleResult').show();
+    storageImage(sender) {
+        sender.preventDefault();
+        var file_data = $(".gallery img[fieldname = 'inputImage']");
+        var ratio_scale;
+        var ratio_scale_btn = this.id;
+        if (ratio_scale_btn == 'ratio-x2') {
+            ratio_scale = 2;
+        } else ratio_scale = 2;
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+        form_data.append('ratio-scale', ratio_scale);
+        $.ajax({
+            type: 'POST',
+            url: "{{ url('storage/app/uploads')}}",
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                this.reset();
+                alert('File has been uploaded successfully');
+                console.log(data);
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
     }
 }
 
@@ -62,12 +78,6 @@ $('#gallery-photo-add').on('change', function() {
     $('.intro').hide();
     $('#image-contain').addClass('image-preview');
     $('input').val("");
-    // let startButton = $(` <div class="ratio-contain">
-    //                         <button id="ratio-x2" class="d-btn ratio-btn">x2</button>
-    //                      <button id="ratio-x4" class="d-btn ratio-btn">x4</button>
-    //                     </div>`);
-    // $('.content-inside').append(startButton)
-
 });
 
 

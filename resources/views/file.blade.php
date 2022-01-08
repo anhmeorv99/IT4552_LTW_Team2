@@ -38,7 +38,6 @@
           </div>
         </div>
       </form>
-      <img src="{{url('/results/X4_uEmylCxkMc1hemFRqs5ShrUIYto01DxoKIIGtifG.jpg')}}" alt="Image"/>
     </div>
   </body>
   <script type="text/javascript">

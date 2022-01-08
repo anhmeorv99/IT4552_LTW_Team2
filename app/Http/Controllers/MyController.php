@@ -73,7 +73,8 @@ class MyController extends Controller
             $custom_file_name = $request->file('file')->getClientOriginalName();
             $extension = $request->file('file')->getClientOriginalExtension();
             $file_name = $hash . '.' . $extension;
-
+            
+            dd($file_name);
             // // store your file into database
             $exist_image = Image::find($hash);
             if (!$exist_image){
@@ -82,6 +83,11 @@ class MyController extends Controller
                 $document->id = $hash;
                 $document->file_name = $custom_file_name;
                 $document->save();
+            } else {
+                // rename image
+                $request->file('file')->storeAs('uploads', $file_name);
+                $exist_image->file_name = $custom_file_name;
+                $exist_image->save();
             }
 
 

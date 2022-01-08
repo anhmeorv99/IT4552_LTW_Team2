@@ -69,10 +69,6 @@
 
         e.preventDefault();
         getData();
-        // interval = setInterval(() => {
-        //     getData()
-        // }, 5000);
-
     });
 </script>
 

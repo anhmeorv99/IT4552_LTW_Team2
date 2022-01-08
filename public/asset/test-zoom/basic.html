@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF8">
+    <title>Title</title>
+    <!-- <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script> -->
+    <script src="./js-image-zoom.js"></script>
+</head>
+
+<body>
+    <div id="img-container" style="width: 500px; height:300px;">
+        <img src="2.jpg" />
+        <div>
+            <script>
+                var options = {
+                    // width: 400,
+                    fillContainer: true,
+                    offset: {
+                        vertical: 10,
+                        horizontal: 10,
+                        scale: 3
+                    }
+                };
+                new ImageZoom(document.getElementById("img-container"), options);
+            </script>
+</body>
+
+</html>
