@@ -101,6 +101,7 @@ function displayResult(e) {
 let intervalUpload = '';
 $('.btn-upload-image').on('click', function () {
     let scaleUp = $(this).data('scale')
+    console.log(scaleUp)
     $('.ratio-contain').find('button').attr('disabled', true)
     dataFile.append('scale', scaleUp);
     $($('#upscaledImg .image')[0]).append(loadingHtml);
@@ -119,12 +120,15 @@ function handleUpload() {
             $($('#upscaledImg .image')[0]).append(loadingHtml)
         },
         success: (data) => {
-          if (data.status_code == 1) {
-                let html = '';
-                html += `<img src='/results/${data.file_name}' data-id='${data.file_name}'>`
-                $('#upscaledImg .image img[fieldname = "inputImage"]').attr('src', `results/${data.file_name}`);
-                $('#upscaledImg .image img').attr('fieldname', '');
-                $('.loading').remove();
+          if (data.status_code != 2) {
+
+                if (data.status_code == 1){
+                    let html = '';
+                    html += `<img src='/results/${data.file_name}' data-id='${data.file_name}'>`
+                    $('#upscaledImg .image img[fieldname = "inputImage"]').attr('src', `results/${data.file_name}`);
+                    $('#upscaledImg .image img').attr('fieldname', '');
+                    $('.loading').remove();
+                }
                 clearInterval(intervalUpload)
           }
         },

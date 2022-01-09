@@ -84,10 +84,9 @@ class MyController extends Controller
                 $document->save();
             }
 
-
             $response = Http::post('http://127.0.0.1:5000/upscale_image', [
                 'file_name' => $file_name,
-                'scale' => 2,
+                'scale' => $request->scale
             ]);
             return response()->json(json_decode($response->body()));
             // return $response->body();
