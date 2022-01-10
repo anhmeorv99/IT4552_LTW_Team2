@@ -7,13 +7,14 @@
         <div class="header-signIn">
 
             <ul class="top-details menu-beta l-inline">
-                @guest
-                    <li><a class="nav-item" href="{{route('login')}}">Login</a></li>
-                    <li><a id="registerUser" class="nav-item" href="{{route('register-user')}}">Register</a></li>
-                    @endguest
-                @auth
+                @if (Auth::user())
                 <li><a class="nav-item" href="{{route('signout')}}">Logout</a></li>
-                @endauth
+                @else
+                <li><a class="nav-item" href="{{route('login')}}">Login</a></li>
+                <li><a id="registerUser" class="nav-item" href="{{route('register-user')}}">Register</a></li>
+                @endif
+
+                {{-- {{Auth::user()->name}} --}}
             </ul>
 
 

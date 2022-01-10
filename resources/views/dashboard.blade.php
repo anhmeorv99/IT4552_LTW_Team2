@@ -1,6 +1,7 @@
 @extends('master')
 
 @section('content')
+@extends('layout.header')
 
     <div class="content-contain">
         <div class="content-left intro">

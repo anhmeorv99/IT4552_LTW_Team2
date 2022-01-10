@@ -111,7 +111,7 @@ $('.btn-upload-image').on('click', function () {
 function containsObject(list, obj) {
     var i;
     for (i = 0; i < list.length; i++) {
-        if (list[i].origin === obj.origin) {
+        if (list[i].result === obj.result) {
             return true;
         }
     }
@@ -155,11 +155,14 @@ function loadOldData () {
         // result image
         $('#upscaledImg').html(resultImage);
 
-        $(".zoomImage").elevateZoom({
-            zoomType: 'lens',
-            lensShape: 'round',
-            lensSize: 200
-        });
+        // $(".zoomImage").elevateZoom({
+        //     zoomType: 'lens',
+        //     lensShape: 'round',
+        //     lensSize: 300
+        // });
+        $("img").blowup({
+            background : "#FCEBB6"
+          });
     }
 }
 
