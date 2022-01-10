@@ -12,6 +12,7 @@
                     <li><a id="registerUser" class="nav-item" href="{{route('register-user')}}">Register</a></li>
                     @endguest
                 @auth
+                <li><a class="nav-item" href="{{route('profile')}}">Profile</a></li>
                 <li><a class="nav-item" href="{{route('signout')}}">Logout</a></li>
                 @endauth
             </ul>
