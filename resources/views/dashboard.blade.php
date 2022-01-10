@@ -15,23 +15,23 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="./asset/logo-big.png" class="d-block carousel-image" alt="...">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <button class="carousel-ratio">x1</button>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="./asset/logo-big.png" class="d-block carousel-image" alt="...">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <button class="carousel-ratio">x2</button> </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="./asset/logo-big.png" class="d-block carousel-image" alt="...">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <button class="carousel-ratio">x4</button> </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="./asset/logo-big.png" class="d-block carousel-image" alt="...">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <button class="carousel-ratio">x8</button> </div>
                         </div>
