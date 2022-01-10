@@ -91,6 +91,7 @@ class MyController extends Controller
             ]);
             return response()->json([
                 'image_origin' => "/uploads/".$file_name,
+                "custom_file_name" => $custom_file_name,
                 'result' => json_decode($response->body())
             ]);
             // return $response->body();

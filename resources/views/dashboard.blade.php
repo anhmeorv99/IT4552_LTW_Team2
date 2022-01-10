@@ -70,7 +70,7 @@
     </div>
     <div class="result" id="upscaleResult">
         <div class="result-header">
-            <div class="result-time">Some thing here</div>
+            {{-- <div class="result-time">Some thing here</div> --}}
             <button id="delImg" class="d-btn delete-result">Delete</button>
         </div>
         <div class="result-content" id="upscaleImage">

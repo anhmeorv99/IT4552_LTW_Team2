@@ -68,7 +68,7 @@ class Upscale {
     //     $('#upscaleResult').show();
     // }
 }
-
+$('.ratio-contain').find('button').attr('disabled', true)
 let dataFile = new FormData();
 // preview image
 $('#gallery-photo-add').on('change', function(e) {
@@ -90,7 +90,7 @@ const loadingHtml = '<div class="loading lds-roller"><div></div><div></div><div>
 function displayResult(e) {
     let src = URL.createObjectURL(e.target.files[0])
     let imageHtml = `<div class="image">
-        <img src="${src}" fieldname="inputImage" data-image="${src}" class="zoomImage">
+        <img src="${src}" fieldname="inputImage" data-zoom="${src}" class="zoomImage1">
     </div>`
     $('.result-img').prepend(imageHtml);
     $('.intro-next').show();
@@ -106,7 +106,7 @@ $('.btn-upload-image').on('click', function () {
     $(this).attr('disabled', true)
     dataFile.append('scale', scaleUp);
     $($('#upscaledImg .image')[0]).append(loadingHtml);
-    intervalUpload = setInterval(function () { handleUpload(); }, 1000);
+    intervalUpload = setInterval(function () { handleUpload(); }, 3000);
 })
 
 function containsObject(list, obj) {
@@ -125,23 +125,24 @@ loadOldData();
 function loadOldData () {
     let oldImages = localStorage.getItem('oldImages') ? JSON.parse(localStorage.getItem('oldImages')) : []
     if (oldImages.length > 0) {
+        oldImages = oldImages.reverse()
         let gallery = '';
         let originImage = '';
         let resultImage = '';
         oldImages.map(item => {
-            gallery += `
-                <img src="${item.origin}">
-            `;
+            // gallery += `
+            //     <img src="${item.origin}">
+            // `;
 
             originImage += `
-                <div class="image">
-                    <img src="${item.origin}" class="zoomImage" data-image="${item.origin}">
+                <div class="zoomImage">
+                    <img src="${item.origin}"  class="zoomImage1" data-zoom="${item.origin}">
                 </div>
             `;
 
             resultImage += `
-                <div class="image">
-                    <img src="/results/${item.result}" class="zoomImage" data-image="/results/${item.result}">
+                <div class="zoomImage">
+                    <img src="/results/${item.result}" class="zoomImage1" data-zoom="/results/${item.result}">
                 </div>
             `;
         })
@@ -162,11 +163,46 @@ function loadOldData () {
         //     lensSize: 300
         // });
 
-        $(".zoomImage").loupe()
+        // $(".zoomImage").loupe()
+
+        for (let i = 0; i < $("#upscaledImg .zoomImage").length; i++){
+            let resultImage =  $("#upscaledImg .zoomImage").eq(i).find('img').eq(0)
+
+
+                let origImage = $('#orgImg').find('img').eq(resultImage.index())
+                console.log(resultImage, origImage)
+
+                new Drift(resultImage[0], {
+                    inlinePane: true,
+                containInline: true,
+            // inlinePane: 10 5,
+                sourceAttribute: 'data-zoom',
+
+                paneContainer: document.querySelector('#orgImg'),
+                zoomFactor:2
+            });
+
+
+
+        }
+
+        for (let i = 0; i < $("#orgImg .zoomImage").length; i++){
+            new Drift($("#orgImg .zoomImage img")[i], {
+                inlinePane: true,
+                containInline: true,
+                // inlinePane: 10 5,
+                sourceAttribute: 'data-zoom',
+
+                paneContainer: document.querySelector('#orgImg'),
+                zoomFactor: 2
+              });
+
+        }
     }
 }
 
 let lastItem = '';
+let lastInputImageName = ''
 
 function handleUpload() {
     $.ajax({
@@ -184,23 +220,36 @@ function handleUpload() {
                     let html = '';
                     html += `<img src='/results/${data.result.file_name}'>`
                     $('#upscaledImg .image img[fieldname = "inputImage"]').attr('src', `results/${data.result.file_name}`);
-                    $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-image', `results/${data.result.file_name}`);
+                    $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-zoom', `results/${data.result.file_name}`);
                     $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-id', `${data.result.file_name}`);
 
-                    $(`.loupe img[src="results/${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
-                    $(`.image img[data-id="${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
+                    // $(`.image img[src="results/${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
+console.log(data.custom_file_name)
+if (lastInputImageName !=
+    '') {
+        lastInputImageName = data.custom_file_name
+    }
+
+                     if(lastInputImageName != data.custom_file_name) {
+                        lastInputImageName = data.custom_file_name
+                        lastItem = ''
+                    } else {
+                        $(`.image img[data-id="${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
+
+                    }
+
                     lastItem = data.result.file_name;
-                    $(`.image img[data-id="${lastItem}"]`).attr('data-id', `${lastItem}`);
+                    // $(`.image img[data-id="${lastItem}"]`).attr('data-id', `${lastItem}`);
 
                     // zoom
-                    $('#upscaledImg .image img').addClass('zoomImage');
+                    $('#upscaledImg .image img').addClass('zoomImage1');
 
                     $('#upscaledImg .image img').attr('fieldname', '');
                     $('.loading').remove();
 
                     let newItem = {
                         'origin': data.image_origin,
-                        'result': data.result.file_name
+                        'result': data.result.file_name,
                     }
 
                     if (!containsObject(oldImages, newItem)) {
@@ -213,9 +262,23 @@ function handleUpload() {
                     //     lensSize: 200
                     // });
 
-                    $(".zoomImage").loupe()
+                    // $(".zoomImage").loupe()
 
                     localStorage.setItem('oldImages', JSON.stringify(oldImages));
+
+
+                    for (let i = 0; i < $(".zoomImage1").length; i++){
+                        new Drift($(".zoomImage1")[i], {
+                            inlinePane: true,
+                            containInline: true,
+                            // inlinePane: 10 5,
+                            sourceAttribute: 'data-zoom',
+
+                            paneContainer: document.querySelector('#orgImg'),
+                            zoomFactor: 2
+                          });
+
+                    }
                 }
                 clearInterval(intervalUpload)
             }
