@@ -76,19 +76,23 @@ class MyController extends Controller
 
             // // store your file into database
             $exist_image = Image::find($hash);
-            if (!$exist_image){
-                $request->file('file')->storeAs('uploads', $file_name);
-                $document = new Image();
-                $document->id = $hash;
-                $document->file_name = $custom_file_name;
-                $document->save();
-            }
+            // if (!$exist_image){
+                // $request->file('file')->storeAs('uploads', $file_name);
+                $request->file('file')->move(public_path('/uploads'), $file_name);
+                // $document = new Image();
+                // $document->id = $hash;
+                // $document->file_name = $custom_file_name;
+                // $document->save();
+            // }
 
             $response = Http::post('http://127.0.0.1:5000/upscale_image', [
                 'file_name' => $file_name,
                 'scale' => $request->scale
             ]);
-            return response()->json(json_decode($response->body()));
+            return response()->json([
+                'image_origin' => "/uploads/".$file_name,
+                'result' => json_decode($response->body())
+            ]);
             // return $response->body();
         }
 
