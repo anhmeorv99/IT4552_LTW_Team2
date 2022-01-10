@@ -90,7 +90,7 @@ const loadingHtml = '<div class="loading lds-roller"><div></div><div></div><div>
 function displayResult(e) {
     let src = URL.createObjectURL(e.target.files[0])
     let imageHtml = `<div class="image">
-        <img src="${src}" fieldname="inputImage">
+        <img src="${src}" fieldname="inputImage" data-image="${src}" class="zoomImage">
     </div>`
     $('.result-img').prepend(imageHtml);
     $('.intro-next').show();
@@ -99,13 +99,14 @@ function displayResult(e) {
 
 
 let intervalUpload = '';
+let scaleUp = '';
 $('.btn-upload-image').on('click', function () {
-    let scaleUp = $(this).data('scale')
+    scaleUp = $(this).data('scale')
     console.log(scaleUp)
     $(this).attr('disabled', true)
     dataFile.append('scale', scaleUp);
     $($('#upscaledImg .image')[0]).append(loadingHtml);
-    intervalUpload = setInterval(function () { handleUpload(); }, 3000);
+    intervalUpload = setInterval(function () { handleUpload(); }, 1000);
 })
 
 function containsObject(list, obj) {
@@ -160,11 +161,12 @@ function loadOldData () {
         //     lensShape: 'round',
         //     lensSize: 300
         // });
-        $("img").blowup({
-            background : "#FCEBB6"
-          });
+
+        $(".zoomImage").loupe()
     }
 }
+
+let lastItem = '';
 
 function handleUpload() {
     $.ajax({
@@ -174,21 +176,24 @@ function handleUpload() {
         contentType: false,
         processData: false,
         enctype: 'multipart/form-data',
-        beforeSend: function () {
-            $($('#upscaledImg .image')[0]).append(loadingHtml)
-        },
         success: (data) => {
             let oldImages = localStorage.getItem('oldImages') ? JSON.parse(localStorage.getItem('oldImages')) : []
 
             if (data.result.status_code != 2) {
                 if (data.result.status_code == 1){
                     let html = '';
-                    html += `<img src='/results/${data.result.file_name}' data-id='${data.result.file_name}'>`
+                    html += `<img src='/results/${data.result.file_name}'>`
                     $('#upscaledImg .image img[fieldname = "inputImage"]').attr('src', `results/${data.result.file_name}`);
                     $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-image', `results/${data.result.file_name}`);
+                    $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-id', `${data.result.file_name}`);
 
-                    $('#upscaledImg .image').addClass('zoomImage');
+                    $(`.loupe img[src="results/${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
+                    $(`.image img[data-id="${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
+                    lastItem = data.result.file_name;
+                    $(`.image img[data-id="${lastItem}"]`).attr('data-id', `${lastItem}`);
 
+                    // zoom
+                    $('#upscaledImg .image img').addClass('zoomImage');
 
                     $('#upscaledImg .image img').attr('fieldname', '');
                     $('.loading').remove();
@@ -202,24 +207,32 @@ function handleUpload() {
                         oldImages.push(newItem);
                     }
 
-                    $(".zoomImage").elevateZoom({
-                        zoomType: 'lens',
-                        lensShape: 'round',
-                        lensSize: 200
-                    });
+                    // $(".zoomImage").elevateZoom({
+                    //     zoomType: 'lens',
+                    //     lensShape: 'round',
+                    //     lensSize: 200
+                    // });
+
+                    $(".zoomImage").loupe()
 
                     localStorage.setItem('oldImages', JSON.stringify(oldImages));
                 }
                 clearInterval(intervalUpload)
             }
-
-
-
         },
         error: function(data) {
           console.log(data);
         }
     });
+}
+
+function zoom(e){
+    var zoomer = e.currentTarget;
+    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+    x = offsetX/zoomer.offsetWidth*100
+    y = offsetY/zoomer.offsetHeight*100
+    zoomer.style.backgroundPosition = x + '% ' + y + '%';
 }
 
 // load image from computer
