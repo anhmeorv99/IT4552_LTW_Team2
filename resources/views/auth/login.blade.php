@@ -1,6 +1,8 @@
 @extends('master')
 
 @section('content')
+@extends('layout.header')
+
 <main class="login-form">
     <div class="cotainer" style="margin-top: 60px;">
         <div class="row justify-content-center">

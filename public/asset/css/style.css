@@ -148,3 +148,8 @@ button[disabled]
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .image {
+      width: 400px;
+  }
+

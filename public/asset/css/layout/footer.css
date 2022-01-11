@@ -44,26 +44,26 @@
 }
 
 .icon-1 {
-    -webkit-mask: url('../../../public/asset/icon/3-google.svg') no-repeat center;
-    mask: url('../../../public/asset/icon/3-google.svg') no-repeat center;
+    -webkit-mask: url('../../icon/3-google.svg') no-repeat center;
+    mask: url('../../icon/3-google.svg') no-repeat center;
 }
 
 .icon-2 {
-    -webkit-mask: url('../../../public/asset/icon/6-twitter.svg') no-repeat center;
-    mask: url('../../../public/asset/icon/6-twitter.svg') no-repeat center;
+    -webkit-mask: url('../../icon/6-twitter.svg') no-repeat center;
+    mask: url('../../icon/6-twitter.svg') no-repeat center;
 }
 
 .icon-3 {
-    -webkit-mask: url('../../../public/asset/icon/4-linkedin.svg') no-repeat center;
-    mask: url('../../../public/asset/icon/4-linkedin.svg') no-repeat center;
+    -webkit-mask: url('../../icon/4-linkedin.svg') no-repeat center;
+    mask: url('../../icon/4-linkedin.svg') no-repeat center;
 }
 
 .icon-4 {
-    -webkit-mask: url('../../../public/asset/icon/7-facebook1.svg') no-repeat center;
-    mask: url('../../../public/asset/icon/7-facebook1.svg') no-repeat center;
+    -webkit-mask: url('../../icon/7-facebook1.svg') no-repeat center;
+    mask: url('../../icon/7-facebook1.svg') no-repeat center;
 }
 
 .icon-5 {
-    -webkit-mask: url('../../../public/asset/icon/5-pinterest.svg') no-repeat center;
-    mask: url('../../../public/asset/icon/5-pinterest.svg') no-repeat center;
+    -webkit-mask: url('../../icon/5-pinterest.svg') no-repeat center;
+    mask: url('../../icon/5-pinterest.svg') no-repeat center;
 }

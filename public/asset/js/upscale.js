@@ -68,7 +68,7 @@ class Upscale {
     //     $('#upscaleResult').show();
     // }
 }
-
+$('.ratio-contain').find('button').attr('disabled', true)
 let dataFile = new FormData();
 // preview image
 $('#gallery-photo-add').on('change', function(e) {
@@ -90,7 +90,7 @@ const loadingHtml = '<div class="loading lds-roller"><div></div><div></div><div>
 function displayResult(e) {
     let src = URL.createObjectURL(e.target.files[0])
     let imageHtml = `<div class="image">
-        <img src="${src}" fieldname="inputImage">
+        <img src="${src}" fieldname="inputImage" data-zoom="${src}" class="zoomImage1">
     </div>`
     $('.result-img').prepend(imageHtml);
     $('.intro-next').show();
@@ -99,13 +99,116 @@ function displayResult(e) {
 
 
 let intervalUpload = '';
+<<<<<<< HEAD
 $('.btn-upload-image').on('click', function() {
     let scaleUp = $(this).data('scale')
     $('.ratio-contain').find('button').attr('disabled', true)
+=======
+let scaleUp = '';
+$('.btn-upload-image').on('click', function () {
+    scaleUp = $(this).data('scale')
+    console.log(scaleUp)
+    $(this).attr('disabled', true)
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
     dataFile.append('scale', scaleUp);
     $($('#upscaledImg .image')[0]).append(loadingHtml);
     intervalUpload = setInterval(function() { handleUpload(); }, 3000);
 })
+
+function containsObject(list, obj) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i].result === obj.result) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+loadOldData();
+
+function loadOldData () {
+    let oldImages = localStorage.getItem('oldImages') ? JSON.parse(localStorage.getItem('oldImages')) : []
+    if (oldImages.length > 0) {
+        oldImages = oldImages.reverse()
+        let gallery = '';
+        let originImage = '';
+        let resultImage = '';
+        oldImages.map(item => {
+            // gallery += `
+            //     <img src="${item.origin}">
+            // `;
+
+            originImage += `
+                <div class="zoomImage">
+                    <img src="${item.origin}"  class="zoomImage1" data-zoom="${item.origin}">
+                </div>
+            `;
+
+            resultImage += `
+                <div class="zoomImage">
+                    <img src="/results/${item.result}" class="zoomImage1" data-zoom="/results/${item.result}">
+                </div>
+            `;
+        })
+        $('.content-left').css('display', 'none');
+        $('.content-right-contain').addClass('image-preview')
+        $('.gallery').html(gallery);
+
+        $('#upscaleResult').css('display', 'block');
+        // origin image
+        $('.origin-image').html(originImage);
+
+        // result image
+        $('#upscaledImg').html(resultImage);
+
+        // $(".zoomImage").elevateZoom({
+        //     zoomType: 'lens',
+        //     lensShape: 'round',
+        //     lensSize: 300
+        // });
+
+        // $(".zoomImage").loupe()
+
+        for (let i = 0; i < $("#upscaledImg .zoomImage").length; i++){
+            let resultImage =  $("#upscaledImg .zoomImage").eq(i).find('img').eq(0)
+
+
+                let origImage = $('#orgImg').find('img').eq(resultImage.index())
+                console.log(resultImage, origImage)
+
+                new Drift(resultImage[0], {
+                    inlinePane: true,
+                containInline: true,
+            // inlinePane: 10 5,
+                sourceAttribute: 'data-zoom',
+
+                paneContainer: document.querySelector('#orgImg'),
+                zoomFactor:2
+            });
+
+
+
+        }
+
+        for (let i = 0; i < $("#orgImg .zoomImage").length; i++){
+            new Drift($("#orgImg .zoomImage img")[i], {
+                inlinePane: true,
+                containInline: true,
+                // inlinePane: 10 5,
+                sourceAttribute: 'data-zoom',
+
+                paneContainer: document.querySelector('#orgImg'),
+                zoomFactor: 2
+              });
+
+        }
+    }
+}
+
+let lastItem = '';
+let lastInputImageName = ''
 
 function handleUpload() {
     $.ajax({
@@ -115,6 +218,7 @@ function handleUpload() {
         contentType: false,
         processData: false,
         enctype: 'multipart/form-data',
+<<<<<<< HEAD
         beforeSend: function() {
             $($('#upscaledImg .image')[0]).append(loadingHtml)
         },
@@ -137,12 +241,92 @@ function handleUpload() {
                 };
                 let container = document.getElementsByName("image");
                 new ImageZoom(container, options);
+=======
+        success: (data) => {
+            let oldImages = localStorage.getItem('oldImages') ? JSON.parse(localStorage.getItem('oldImages')) : []
+
+            if (data.result.status_code != 2) {
+                if (data.result.status_code == 1){
+                    let html = '';
+                    html += `<img src='/results/${data.result.file_name}'>`
+                    $('#upscaledImg .image img[fieldname = "inputImage"]').attr('src', `results/${data.result.file_name}`);
+                    $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-zoom', `results/${data.result.file_name}`);
+                    $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-id', `${data.result.file_name}`);
+
+                    // $(`.image img[src="results/${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
+console.log(data.custom_file_name)
+if (lastInputImageName !=
+    '') {
+        lastInputImageName = data.custom_file_name
+    }
+
+                     if(lastInputImageName != data.custom_file_name) {
+                        lastInputImageName = data.custom_file_name
+                        lastItem = ''
+                    } else {
+                        $(`.image img[data-id="${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
+
+                    }
+
+                    lastItem = data.result.file_name;
+                    // $(`.image img[data-id="${lastItem}"]`).attr('data-id', `${lastItem}`);
+
+                    // zoom
+                    $('#upscaledImg .image img').addClass('zoomImage1');
+
+                    $('#upscaledImg .image img').attr('fieldname', '');
+                    $('.loading').remove();
+
+                    let newItem = {
+                        'origin': data.image_origin,
+                        'result': data.result.file_name,
+                    }
+
+                    if (!containsObject(oldImages, newItem)) {
+                        oldImages.push(newItem);
+                    }
+
+                    // $(".zoomImage").elevateZoom({
+                    //     zoomType: 'lens',
+                    //     lensShape: 'round',
+                    //     lensSize: 200
+                    // });
+
+                    // $(".zoomImage").loupe()
+
+                    localStorage.setItem('oldImages', JSON.stringify(oldImages));
+
+
+                    for (let i = 0; i < $(".zoomImage1").length; i++){
+                        new Drift($(".zoomImage1")[i], {
+                            inlinePane: true,
+                            containInline: true,
+                            // inlinePane: 10 5,
+                            sourceAttribute: 'data-zoom',
+
+                            paneContainer: document.querySelector('#orgImg'),
+                            zoomFactor: 2
+                          });
+
+                    }
+                }
+                clearInterval(intervalUpload)
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
             }
         },
         error: function(data) {
             console.log(data);
         }
     });
+}
+
+function zoom(e){
+    var zoomer = e.currentTarget;
+    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+    x = offsetX/zoomer.offsetWidth*100
+    y = offsetY/zoomer.offsetHeight*100
+    zoomer.style.backgroundPosition = x + '% ' + y + '%';
 }
 
 // load image from computer
