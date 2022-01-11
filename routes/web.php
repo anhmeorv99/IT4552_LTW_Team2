@@ -26,3 +26,13 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 
 Route::get('file', [MyController::class, 'index'])->name('file');
 Route::post('store', [MyController::class, 'store'])->name('store-file');
+<<<<<<< HEAD
+
+Route::get('admin', [MyController::class, 'admin'])->name('admin');
+Route::get('destroy/{id}', [MyController::class, 'destroy'])->name('destroy');
+
+
+
+
+=======
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
