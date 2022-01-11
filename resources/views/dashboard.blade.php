@@ -74,6 +74,8 @@
             <button id="delImg" class="d-btn delete-result">Delete</button>
         </div>
         <div class="result-content" id="upscaleImage">
+
+
             <div class="result-img origin-image" id="orgImg">
                 <!-- <img src="./asset/icon/Screenshot from 2021-12-19 01-45-58.png" alt="Origin-image"> -->
             </div>

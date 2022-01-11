@@ -112,3 +112,17 @@ a:hover, a:active {
  #registerUser {
      margin-right: 10px;
  }
+
+ #dropdownMenuButton2 {
+     background-color: #563838 ;
+     border: none;
+ }
+
+ .dropdown-item {
+     background-color:#744f4f ;
+ }
+
+ .dropdown-item:hover {
+    background-color:#80a59c !important ;
+
+ }

@@ -3,62 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Models\Image;
+use App\Models\User;
+use DB;
 
 class MyController extends Controller
 {
-    /**
-     * Create a new controller instance.
-*
-*
-     * @return void
-     */
-    public function ajaxRequest()
-    {
-        return view('ajaxRequest');
-    }
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function ajaxRequestPost(Request $request)
-    {
-        $input = $request->email;
-        $response = Http::post('https://super-resolution-u3v4lxreva-uk.a.run.app/upscale_image', [
-            'scale' => $input->scale,
-            'role' => 'Network Administrator',
-        ]);
-        return response()->json(['success'=> $response->body()]);
-        // if ($input->email == "test@gmail.com"){
-        //     return response()->json(['success'=>'Got Simple Ajax Request.']);
-        // }
-        // else return response()->json(['fail'=>'OK']);
-    }
-
-    public function imageUploadPost(Request $request)
-    {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg',
-        ]);
-
-        $imageName = time().'.'.$request->image->extension();
-
-        $request->image->move(public_path('asset.uploads'), $imageName);
-
-        /* Store $imageName name in DATABASE from HERE */
-
-        return back()
-            ->with('success','You have successfully upload image.')
-            ->with('image',$imageName);
-    }
-
-    public function index()
-    {
-        return view('file');
-    }
 
     public function store(Request $request)
     {
@@ -76,14 +28,39 @@ class MyController extends Controller
 
             // // store your file into database
             $exist_image = Image::find($hash);
-            // if (!$exist_image){
-                // $request->file('file')->storeAs('uploads', $file_name);
+            if (!$exist_image){
+                $request->file('file')->storeAs('uploads', $file_name);
                 $request->file('file')->move(public_path('/uploads'), $file_name);
-                // $document = new Image();
-                // $document->id = $hash;
-                // $document->file_name = $custom_file_name;
-                // $document->save();
-            // }
+                $document = new Image();
+                $document->id = $hash;
+                $document->file_name = $custom_file_name;
+                $document->hashed_filename = $file_name;
+                if ($request->scale == 2){
+                    $document->scale_x2 = 1;
+                }
+                if ($request->scale == 4){
+                    $document->scale_x4 = 1;
+                }
+
+                if ($request->user_id != null){
+                    $document->user_id = $request->user_id;
+                }
+
+
+                $document->save();
+            }else{
+                if ($request->scale == 2){
+                    $exist_image->scale_x2 = 1;
+                }
+                if ($request->scale == 4){
+                    $exist_image->scale_x4 = 1;
+                }
+
+                if ($request->user_id != null){
+                    $exist_image->user_id = $request->user_id;
+                }
+                $exist_image->save();
+            }
 
             $response = Http::post('http://127.0.0.1:5000/upscale_image', [
                 'file_name' => $file_name,
@@ -101,6 +78,33 @@ class MyController extends Controller
                 "success" => false,
                 "file" => ''
           ]);
-
     }
+
+    public function scaled(){
+        $images = null;
+        if (Auth::user()){
+            $user_id = Auth::user()->id;
+            $images = Image::where('user_id', (int)$user_id)->get();
+        }
+        return view('upscaled_images', compact('images'));
+    }
+
+    public function admin()
+    {
+        $data = DB::table('users')->join('images','users.id','images.user_id')
+            ->select('users.id','email', 'name', 'is_admin',DB::raw('COUNT(images.id) AS image_count'))
+            ->groupByRaw('users.id, email, name, is_admin')->get();
+        return view('admin',  compact('data'));
+    }
+    public function destroy($id)
+    {
+
+        $res = Image::where('user_id',$id)->delete();
+
+        $data = DB::table('users')->where('id',$id)->delete();
+
+        return redirect()->route('admin');
+    }
+
+
 }

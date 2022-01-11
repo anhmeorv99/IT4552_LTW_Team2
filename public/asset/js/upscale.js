@@ -17,9 +17,6 @@ class Upscale {
 
     initEvents() {
 
-        // $('#ratio-x2').click(this.displayResult.bind(this));
-        // $('.ratio-btn').click(this.displayResult.bind(this));
-
         // delete image upscaled
         $('#delImg').click(this.deletePopupShow.bind(this));
         $('#delete-cont').click(this.deleteUpscaledImg);
@@ -44,29 +41,10 @@ class Upscale {
         $('.result-img').children().remove();
         $('#deletePopup').hide();
         $('#upscaleResult').hide();
+        localStorage.clear();
     }
 
 
-    // load result
-    // displayResult() {
-    //     let images = $(".gallery img[fieldname = 'inputImage']");
-    //     for (const image of images) {
-    //         let src = $(image).attr('src')
-    //         let imageAndLoading = `<div class="image">
-    //             <img src="${src}" fieldname="inputImage">
-    //             <div class="loading lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-    //         </div>`
-    //         let imageHtml = `<div class="image">
-    //             <img src="${src}" fieldname="inputImage">
-    //         </div>`
-    //         $('.result-img').prepend(imageHtml);
-    //         // $('.origin-image').prepend(imageHtml);
-    //         // $('#upscaledImg').prepend(imageAndLoading)
-    //     }
-
-    //     $('.intro-next').show();
-    //     $('#upscaleResult').show();
-    // }
 }
 $('.ratio-contain').find('button').attr('disabled', true)
 let dataFile = new FormData();
@@ -122,6 +100,7 @@ function containsObject(list, obj) {
 
 loadOldData();
 
+
 function loadOldData () {
     let oldImages = localStorage.getItem('oldImages') ? JSON.parse(localStorage.getItem('oldImages')) : []
     if (oldImages.length > 0) {
@@ -130,10 +109,6 @@ function loadOldData () {
         let originImage = '';
         let resultImage = '';
         oldImages.map(item => {
-            // gallery += `
-            //     <img src="${item.origin}">
-            // `;
-
             originImage += `
                 <div class="zoomImage">
                     <img src="${item.origin}"  class="zoomImage1" data-zoom="${item.origin}">
@@ -156,14 +131,6 @@ function loadOldData () {
 
         // result image
         $('#upscaledImg').html(resultImage);
-
-        // $(".zoomImage").elevateZoom({
-        //     zoomType: 'lens',
-        //     lensShape: 'round',
-        //     lensSize: 300
-        // });
-
-        // $(".zoomImage").loupe()
 
         for (let i = 0; i < $("#upscaledImg .zoomImage").length; i++){
             let resultImage =  $("#upscaledImg .zoomImage").eq(i).find('img').eq(0)
@@ -205,6 +172,11 @@ let lastItem = '';
 let lastInputImageName = ''
 
 function handleUpload() {
+    if (document.getElementById('user_id_login') != null){
+        dataFile.append('user_id', Number(document.getElementById('user_id_login').value));
+    }else{
+        dataFile.append('user_id', null);
+    }
     $.ajax({
         type: 'POST',
         url: "/store",
@@ -256,13 +228,6 @@ if (lastInputImageName !=
                         oldImages.push(newItem);
                     }
 
-                    // $(".zoomImage").elevateZoom({
-                    //     zoomType: 'lens',
-                    //     lensShape: 'round',
-                    //     lensSize: 200
-                    // });
-
-                    // $(".zoomImage").loupe()
 
                     localStorage.setItem('oldImages', JSON.stringify(oldImages));
 
@@ -289,14 +254,6 @@ if (lastInputImageName !=
     });
 }
 
-function zoom(e){
-    var zoomer = e.currentTarget;
-    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
-    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
-    x = offsetX/zoomer.offsetWidth*100
-    y = offsetY/zoomer.offsetHeight*100
-    zoomer.style.backgroundPosition = x + '% ' + y + '%';
-}
 
 // load image from computer
 var imagesPreview = function(input, placeToInsertImagePreview) {

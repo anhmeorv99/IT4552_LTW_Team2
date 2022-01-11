@@ -20,9 +20,14 @@ Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::post('login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 
 Route::get('/', [CustomAuthController::class, 'dashboard'])->name('dashboard');
+
+Route::get('admin', [MyController::class, 'admin'])->name('admin');
+Route::get('destroy/{id}', [MyController::class, 'destroy'])->name('destroy');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+
+Route::get('scaled', [MyController::class, 'scaled'])->name('scaled');
 
 Route::get('file', [MyController::class, 'index'])->name('file');
 Route::post('store', [MyController::class, 'store'])->name('store-file');
