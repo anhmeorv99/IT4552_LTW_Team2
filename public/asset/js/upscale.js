@@ -80,7 +80,6 @@ let intervalUpload = '';
 let scaleUp = '';
 $('.btn-upload-image').on('click', function () {
     scaleUp = $(this).data('scale')
-    console.log(scaleUp)
     $(this).attr('disabled', true)
     dataFile.append('scale', scaleUp);
     $($('#upscaledImg .image')[0]).append(loadingHtml);
@@ -137,8 +136,6 @@ function loadOldData () {
 
 
                 let origImage = $('#orgImg').find('img').eq(resultImage.index())
-                console.log(resultImage, origImage)
-
                 new Drift(resultImage[0], {
                     inlinePane: true,
                 containInline: true,
@@ -196,7 +193,6 @@ function handleUpload() {
                     $('#upscaledImg .image img[fieldname = "inputImage"]').attr('data-id', `${data.result.file_name}`);
 
                     // $(`.image img[src="results/${lastItem}"]`).attr('src', `results/${data.result.file_name}`)
-console.log(data.custom_file_name)
 if (lastInputImageName !=
     '') {
         lastInputImageName = data.custom_file_name
@@ -273,3 +269,34 @@ var imagesPreview = function(input, placeToInsertImagePreview) {
     }
 
 };
+
+
+$('#imgDownload').on('click', function() {
+
+    var zip = new JSZip();
+    let folder = zip.folder("results");
+    let upscale_imgs = $('#upscaledImg img')
+
+    for (let i=0; i< upscale_imgs.length; i++){
+        let base64 = getBase64Image(upscale_imgs[i]);
+
+        folder.file(`${upscale_imgs[i].src.substring(upscale_imgs[i].src.lastIndexOf('/') +1 )}`, base64, {base64: true})
+
+    }
+
+    zip.generateAsync({type:"blob"})
+               .then(function(content) {
+                //see FileSaver.js
+                saveAs(content, "results.zip");
+      });
+});
+
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  }

@@ -150,6 +150,12 @@ button[disabled]
   }
 
   .image {
-      width: 400px;
+      width: 500px;
   }
+
+
+tr, td {
+    text-align: center;
+    vertical-align: middle;
+}
 

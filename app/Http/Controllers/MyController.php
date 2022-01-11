@@ -27,40 +27,38 @@ class MyController extends Controller
             $file_name = $hash . '.' . $extension;
 
             // // store your file into database
-            $exist_image = Image::find($hash);
-            if (!$exist_image){
-                $request->file('file')->storeAs('uploads', $file_name);
-                $request->file('file')->move(public_path('/uploads'), $file_name);
-                $document = new Image();
-                $document->id = $hash;
-                $document->file_name = $custom_file_name;
-                $document->hashed_filename = $file_name;
-                if ($request->scale == 2){
-                    $document->scale_x2 = 1;
-                }
-                if ($request->scale == 4){
-                    $document->scale_x4 = 1;
-                }
+            if (Auth::user()){
+                $exist_image = Image::find(Auth::user()->email."_".$hash);
+                if (!$exist_image){
+                    $request->file('file')->storeAs('uploads', $file_name);
+                    $request->file('file')->move(public_path('/uploads'), $file_name);
+                    $document = new Image();
+                    $document->id = Auth::user()->email."_".$hash;
+                    $document->file_name = $custom_file_name;
+                    $document->hashed_filename = $file_name;
+                    if ($request->scale == 2){
+                        $document->scale_x2 = 1;
+                    }
+                    if ($request->scale == 4){
+                        $document->scale_x4 = 1;
+                    }
 
-                if ($request->user_id != null){
-                    $document->user_id = $request->user_id;
-                }
+                    if ($request->user_id != null){
+                        $document->user_id = $request->user_id;
+                    }
 
-
-                $document->save();
-            }else{
-                if ($request->scale == 2){
-                    $exist_image->scale_x2 = 1;
+                    $document->save();
+                }else{
+                    if ($request->scale == 2){
+                        $exist_image->scale_x2 = 1;
+                    }
+                    if ($request->scale == 4){
+                        $exist_image->scale_x4 = 1;
+                    }
+                    $exist_image->save();
                 }
-                if ($request->scale == 4){
-                    $exist_image->scale_x4 = 1;
-                }
-
-                if ($request->user_id != null){
-                    $exist_image->user_id = $request->user_id;
-                }
-                $exist_image->save();
             }
+
 
             $response = Http::post('http://127.0.0.1:5000/upscale_image', [
                 'file_name' => $file_name,
@@ -84,7 +82,7 @@ class MyController extends Controller
         $images = null;
         if (Auth::user()){
             $user_id = Auth::user()->id;
-            $images = Image::where('user_id', (int)$user_id)->get();
+            $images = Image::where('user_id', (int)$user_id)->paginate(1);;
         }
         return view('upscaled_images', compact('images'));
     }
