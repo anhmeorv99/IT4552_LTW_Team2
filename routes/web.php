@@ -31,3 +31,6 @@ Route::get('scaled', [MyController::class, 'scaled'])->name('scaled');
 
 Route::get('file', [MyController::class, 'index'])->name('file');
 Route::post('store', [MyController::class, 'store'])->name('store-file');
+
+Route::get('profile', [CustomAuthController::class, 'viewProfile'])->name('profile');
+Route::put('profile', [CustomAuthController::class, 'updateProfile'])->name('updateProfile');

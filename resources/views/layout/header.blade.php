@@ -26,7 +26,7 @@
                 {{Auth::user()->name}}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{route('profile')}}">Profile</a></li>
                     @if (Auth::user()->is_admin == 1)
                         <li><a class="dropdown-item" href="{{route('scaled')}}">Upscaled Images</a></li>
                         <li><a class="dropdown-item" href="{{route('admin')}}">Admin</a></li>
