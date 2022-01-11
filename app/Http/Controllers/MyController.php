@@ -108,18 +108,18 @@ class MyController extends Controller
 
     public function admin()
     {
-        $data['userList'] = DB::table('users')->join('images','users.user_id','images.user_id')
-            ->select('users.user_id','email',DB::raw('COUNT(images.id)AS image_count'))
-            ->groupByRaw('users.user_id,email')->get();
+        $data['userList'] = DB::table('users')->join('images','users.id','images.id')
+            ->select('users.id','email',DB::raw('COUNT(images.id)AS image_count'))
+            ->groupByRaw('users.id,email')->get();
             $data['order'] = 0;
         return view('admin',$data);
     }
     public function destroy($id)
-    { 
-        $data = DB::table('users')->where('user_id',$id)->delete(); 
-        $data['userList'] = DB::table('users')->join('images','users.user_id','images.user_id')
-            ->select('users.user_id','email',DB::raw('COUNT(images.id)AS image_count'))
-            ->groupByRaw('users.user_id,email')->get();
+    {
+        $data = DB::table('users')->where('id',$id)->delete();
+        $data['userList'] = DB::table('users')->join('images','users.id','images.id')
+            ->select('users.id','email',DB::raw('COUNT(images.id)AS image_count'))
+            ->groupByRaw('users.id,email')->get();
             $data['order'] = 0;
         return view('admin',$data);
     }

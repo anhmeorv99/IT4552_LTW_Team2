@@ -1,6 +1,7 @@
 @extends('master')
 
 @section('content')
+@extends('layout.header')
 <table class="table table-sm">
   <thead>
     <tr>
