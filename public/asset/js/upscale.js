@@ -1,6 +1,6 @@
 $.ajaxSetup({
     headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
 
@@ -99,14 +99,20 @@ function displayResult(e) {
 
 
 let intervalUpload = '';
+<<<<<<< HEAD
+$('.btn-upload-image').on('click', function() {
+    let scaleUp = $(this).data('scale')
+    $('.ratio-contain').find('button').attr('disabled', true)
+=======
 let scaleUp = '';
 $('.btn-upload-image').on('click', function () {
     scaleUp = $(this).data('scale')
     console.log(scaleUp)
     $(this).attr('disabled', true)
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
     dataFile.append('scale', scaleUp);
     $($('#upscaledImg .image')[0]).append(loadingHtml);
-    intervalUpload = setInterval(function () { handleUpload(); }, 3000);
+    intervalUpload = setInterval(function() { handleUpload(); }, 3000);
 })
 
 function containsObject(list, obj) {
@@ -212,6 +218,30 @@ function handleUpload() {
         contentType: false,
         processData: false,
         enctype: 'multipart/form-data',
+<<<<<<< HEAD
+        beforeSend: function() {
+            $($('#upscaledImg .image')[0]).append(loadingHtml)
+        },
+        success: (data) => {
+            if (data.status_code == 1) {
+                let html = '';
+                html += `<img src='/results/${data.file_name}' data-id='${data.file_name}'>`
+                $('#upscaledImg .image img[fieldname = "inputImage"]').attr('src', `results/${data.file_name}`);
+                $('#upscaledImg .image img').attr('fieldname', '');
+                $('.loading').remove();
+                clearInterval(intervalUpload);
+                console.log('what is going on here');
+                var options = {
+                    fillContainer: true,
+                    offset: {
+                        vertical: 10,
+                        horizontal: 10,
+                        scale: 3
+                    }
+                };
+                let container = document.getElementsByName("image");
+                new ImageZoom(container, options);
+=======
         success: (data) => {
             let oldImages = localStorage.getItem('oldImages') ? JSON.parse(localStorage.getItem('oldImages')) : []
 
@@ -281,10 +311,11 @@ if (lastInputImageName !=
                     }
                 }
                 clearInterval(intervalUpload)
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
             }
         },
         error: function(data) {
-          console.log(data);
+            console.log(data);
         }
     });
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Image;
+use DB;
+use SebastianBergmann\LinesOfCode\Counter;
 
 class MyController extends Controller
 {
@@ -103,4 +105,23 @@ class MyController extends Controller
           ]);
 
     }
+
+    public function admin()
+    {
+        $data['userList'] = DB::table('users')->join('images','users.user_id','images.user_id')
+            ->select('users.user_id','email',DB::raw('COUNT(images.id)AS image_count'))
+            ->groupByRaw('users.user_id,email')->get();
+            $data['order'] = 0;
+        return view('admin',$data);
+    }
+    public function destroy($id)
+    { 
+        $data = DB::table('users')->where('user_id',$id)->delete(); 
+        $data['userList'] = DB::table('users')->join('images','users.user_id','images.user_id')
+            ->select('users.user_id','email',DB::raw('COUNT(images.id)AS image_count'))
+            ->groupByRaw('users.user_id,email')->get();
+            $data['order'] = 0;
+        return view('admin',$data);
+    }
+
 }

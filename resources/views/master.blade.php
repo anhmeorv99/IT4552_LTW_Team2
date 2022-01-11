@@ -13,7 +13,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drift-zoom/1.4.0/drift-basic.min.css">
 </head>
 <body>
+<<<<<<< HEAD
+    @include('layout.header')
+    @include('layout.slide')
+=======
     {{-- @include('layout.header') --}}
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
     @yield('content')
     @include('layout.footer')
 </body>
@@ -26,5 +31,10 @@
 <!-- JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/drift-zoom/1.4.0/Drift.min.js"></script>
     <script src="{{asset('asset/js/upscale.js')}}"></script>
+<<<<<<< HEAD
+    <script src="{{asset('asset/js/zoom.js')}}"></script>
+=======
 
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
 </html>
+
