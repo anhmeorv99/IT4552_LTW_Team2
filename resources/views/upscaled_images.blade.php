@@ -13,18 +13,28 @@
     </tr>
   </thead>
   <tbody>
+      @php
+      if (!isset($count)){
+            $count = 0;
+      }
+      @endphp
       @foreach($images as $key => $item)
       @if ($item->scale_x2 != null && $item->scale_x4 != null)
+
         <tr>
-            <th scope="row">{{$key + 1}}</th>
+            <th scope="row"> {{isset($images) ? (($images->currentPage()-1) * $images->perPage() + $key+1  + $count) : ($key + 1  + $count)}}</th>
             <td><img src="/results/X2_{{$item->hashed_filename}}" width="150", height="150"></td>
             <td>{{$item->file_name}}</td>
             <td>2</td>
             <td><a href="results/X2_{{$item->hashed_filename}}" download><i class="fa fa-download" style="font-size:36px;"></i> </a></td>
         </tr>
 
+        @php
+            $count += 1;
+        @endphp
+
         <tr>
-            <th scope="row">{{$key + 1}}</th>
+            <th scope="row"> {{isset($images) ? (($images->currentPage()-1) * $images->perPage() + $key+1 + $count) : ($key + 1 + $count)}}</th>
             <td><img src="/results/X4_{{$item->hashed_filename}}" width="150", height="150"></td>
             <td>{{$item->file_name}}</td>
             <td>4</td>
@@ -32,7 +42,7 @@
         </tr>
         @else
         <tr>
-            <th scope="row">{{$key + 1}}</th>
+            <th scope="row"> {{isset($images) ? (($images->currentPage()-1) * $images->perPage() + $key+1 + $count) : ($key + 1 + $count)}}</th>
             @if ($item->scale_x2 != null)
                 <td><img src="/results/X2_{{$item->hashed_filename}}" width="150", height="150"></td>
                 <td>{{$item->file_name}}</td>
@@ -50,8 +60,8 @@
     @endforeach
   </tbody>
 </table>
-{{-- <div class="row" style="margin-left: 30px; display='block';">{{ $images->links() }}</div> --}}
-<div class="pagination" style="margin-left:45%;">
+<div class="row" style="margin-left: 40%; display='block';">{{ $images->links() }}</div>
+{{-- <div class="pagination" style="margin-left:45%;">
     @if ($images->hasMorePages())
     <li style="padding-right:50px"><a href="{{ $images->previousPageUrl() }}" rel="next">← Back</a></li>
     <li><a href="{{ $images->nextPageUrl() }}" rel="next">Next →</a></li>
@@ -60,7 +70,7 @@
     <li><span>Next →</span></li>
     @endif
 
-</div>
+</div> --}}
 
 
 

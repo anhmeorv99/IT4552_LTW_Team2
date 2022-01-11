@@ -7,7 +7,6 @@ use Hash;
 use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\UpdateProfileRequest;
 class CustomAuthController extends Controller
 {
 
@@ -83,21 +82,54 @@ class CustomAuthController extends Controller
     }
 
     public function viewProfile() {
-        return view('profile')->with('user', auth()->user());
+        return view('profile');
     }
 
-    public function updateProfile(UpdateProfileRequest $request) {
-        $user = auth()->user();
+    public function updateProfile(Request $request) {
+        $user = Auth::user();
 
-        $user->update([
-            'name'=> $request->username,
-            'email' => $request->email
+        $user->name = $request->input('name');
+        $user->address = $request->input('address');
+        $user->phone = $request->input('phone');
+
+        $user->save();
+        return redirect()->back()->with('status','Student Updated Successfully');
+    }
+
+    public function viewChangePassword() {
+        return view('change_password');
+    }
+
+    public function updateChangePassword(Request $request) {
+        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Incorrect Password");
+        }
+
+        if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
+            // Current password and new password same
+            return redirect()->back()->with("error","New password and Current password same");
+        }
+
+        if(strcmp($request->get('confirm_password'), $request->get('new_password')) != 0){
+            // Current password and new password same
+            return redirect()->back()->with("error-confirm","Confirm password and New password not same");
+        }
+
+        $validatedData = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:6',
+            'confirm_password' => 'required|string|min:6'
         ]);
 
-        session()->flash('success', 'Update profile successfully');
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new_password'));
+        $user->save();
 
-        return redirect('profile')->withSuccess("Update profile successfully");
+        return redirect()->back()->with("success","Change Password Success");
     }
+
 
 }
 

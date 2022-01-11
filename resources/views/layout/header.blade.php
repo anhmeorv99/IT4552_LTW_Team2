@@ -2,7 +2,7 @@
     <div class="header-logo-contain">
         <div class="logo-area">
             <div class="header-logo"><a href="{{route('dashboard')}}"></a></div>
-            <div class="header-brand">Kwarovski</div>
+            <div class="header-brand">Super Resolution</div>
         </div>
         <div class="header-signIn">
 
@@ -30,9 +30,11 @@
                     @if (Auth::user()->is_admin == 1)
                         <li><a class="dropdown-item" href="{{route('scaled')}}">Upscaled Images</a></li>
                         <li><a class="dropdown-item" href="{{route('admin')}}">Admin</a></li>
+                        <li><a class="dropdown-item" href="{{route('viewChangePassword')}}">Change Password</a></li>
                         <li><a class="dropdown-item" href="{{route('signout')}}">Logout</a></li>
                     @else
                         <li><a class="dropdown-item" href="{{route('scaled')}}">Upscaled Images</a></li>
+                        <li><a class="dropdown-item" href="{{route('viewChangePassword')}}">Change Password</a></li>
                         <li><a class="dropdown-item" href="{{route('signout')}}">Logout</a></li>
                     @endif
                 </ul>

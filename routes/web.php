@@ -33,4 +33,7 @@ Route::get('file', [MyController::class, 'index'])->name('file');
 Route::post('store', [MyController::class, 'store'])->name('store-file');
 
 Route::get('profile', [CustomAuthController::class, 'viewProfile'])->name('profile');
-Route::put('profile', [CustomAuthController::class, 'updateProfile'])->name('updateProfile');
+Route::post('profile', [CustomAuthController::class, 'updateProfile'])->name('updateProfile');
+
+Route::get('change_password', [CustomAuthController::class, 'viewChangePassword'])->name('viewChangePassword');
+Route::post('change_password', [CustomAuthController::class, 'updateChangePassword'])->name('updateChangePassword');
