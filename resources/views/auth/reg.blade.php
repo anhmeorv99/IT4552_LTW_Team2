@@ -1,10 +1,11 @@
 @extends('master')
 
 @section('content')
+@extends('layout.header')
 <main class="signup-form">
     <div class="cotainer">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-4" style="margin-top: 50px;">
                 <div class="card">
                     <h3 class="card-header text-center">Register User</h3>
                     <div class="card-body">

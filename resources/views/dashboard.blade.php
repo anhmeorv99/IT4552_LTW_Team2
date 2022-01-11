@@ -1,7 +1,9 @@
 @extends('master')
 
 @section('content')
+@extends('layout.header')
 
+<<<<<<< HEAD
 <div class="content-contain">
     <div class="content-left intro">
         <div class="function">
@@ -35,6 +37,39 @@
                         <img src="./asset/logo-big.png" class="d-block carousel-image" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <button class="carousel-ratio">x8</button>
+=======
+    <div class="content-contain">
+        <div class="content-left intro">
+            <div class="function">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <button class="carousel-ratio">x1</button>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <button class="carousel-ratio">x2</button> </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <button class="carousel-ratio">x4</button> </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('asset/logo-big.png')}}" class="d-block carousel-image" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <button class="carousel-ratio">x8</button> </div>
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
                         </div>
                     </div>
                 </div>
@@ -69,6 +104,7 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 </div>
 <div class="result" id="upscaleResult">
     <div class="result-header">
@@ -78,6 +114,20 @@
     <div class="result-content" id="upscaleImage">
         <div class="result-img origin-image" id="orgImg" style="width: 500px; height:300px;">
             
+=======
+    <div class="result" id="upscaleResult">
+        <div class="result-header">
+            {{-- <div class="result-time">Some thing here</div> --}}
+            <button id="delImg" class="d-btn delete-result">Delete</button>
+        </div>
+        <div class="result-content" id="upscaleImage">
+            <div class="result-img origin-image" id="orgImg">
+                <!-- <img src="./asset/icon/Screenshot from 2021-12-19 01-45-58.png" alt="Origin-image"> -->
+            </div>
+            <div class="result-img upscaled-image" id="upscaledImg">
+                <!-- <img src="./asset/icon/Screenshot from 2021-12-19 01-45-58.png" alt="Upscaled-image"> -->
+            </div>
+>>>>>>> fda8f57b8191873b9227b4019f90e1dce0a0d614
         </div>
         <div class="result-img upscaled-image" id="upscaledImg" style="width: 500px; height:300px;">
         </div>
