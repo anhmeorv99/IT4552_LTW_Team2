@@ -8,11 +8,12 @@ use App\Models\User;
 
 class Image extends Model
 {
+    protected $table = 'images';
     protected $fillable = [
-        'user_id', 'file_name'
+        'id', 'file_name'
     ];
 
-    public function image(){
+    public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
 }

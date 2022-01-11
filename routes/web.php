@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\MyController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,12 +16,20 @@ use App\Http\Controllers\MyController;
 |
 */
 
-Route::get('ajaxRequest', [MyController::class, 'ajaxRequest']);
-Route::post('ajaxRequest', [MyController::class, 'ajaxRequestPost'])->name('ajaxRequest.post');
+Route::get('login', [CustomAuthController::class, 'index'])->name('login');
+Route::post('login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 
 Route::get('/', [CustomAuthController::class, 'dashboard'])->name('dashboard');
-Route::get('login', [CustomAuthController::class, 'index'])->name('login');
-Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
-Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
+Route::post('registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+
+Route::get('file', [MyController::class, 'index'])->name('file');
+Route::post('store', [MyController::class, 'store'])->name('store-file');
+
+Route::get('admin', [MyController::class, 'admin'])->name('admin');
+Route::get('destroy/{id}', [MyController::class, 'destroy'])->name('destroy');
+
+
+
+
